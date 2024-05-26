@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from seed_documents import movie_list
 
 
 URI = "mongodb://davidade300:220498@192.168.124.64:27017/admin"
@@ -10,9 +11,8 @@ try:
     database = client.get_database("sample_mflix")
     movies = database.get_collection("movies")
 
-    # Query for a movie that has the title 'Back to the Future'
-    query = {"title": "Back to the Future"}
-    movie = movies.delete_one(query)
+    query = movie_list
+    movie = movies.insert_many(query)
 
     print(movie)
 
