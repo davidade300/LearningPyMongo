@@ -3,11 +3,11 @@ Durante todo o ciclo de vida da aplicacao é interessante manter somente uma
 instancia do mongoclient, pois a criacão da mesma é custosa
 """
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
 from pymongo.server_api import ServerApi
 from seed_documents import movie_list
 
-
-MONGODB_URI = "here's my connection string or smth like that"
+MONGODB_URI = ""
 client = MongoClient(MONGODB_URI, server_api=ServerApi(
     version='1', strict=True, deprecation_errors=True))
 
@@ -23,5 +23,5 @@ try:
     client.close()
 
 except Exception as e:
-    raise Exception(
-        "Unable to find the document due to the following error: ", e) from e
+    raise ConnectionFailure(
+        message="Unable to find the document due to the following error: ") from e
